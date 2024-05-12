@@ -22,6 +22,7 @@ type Client struct {
 
 var _ connector.AuthClient = (*Client)(nil)
 
+// TokenStruct структура для управления токеном
 type TokenStruct struct {
 	value string
 	mu    sync.Mutex
@@ -104,11 +105,14 @@ func (c *Client) SetAccessToken(ctx context.Context) error {
 	return nil
 }
 
+// GetRefreshToken Вернуть refresh-токен
 func GetRefreshToken() string {
 	refreshToken.mu.Lock()
 	defer refreshToken.mu.Unlock()
 	return refreshToken.value
 }
+
+// GetAccessToken Вернуть access-токен
 func GetAccessToken() string {
 	accessToken.mu.Lock()
 	defer accessToken.mu.Unlock()

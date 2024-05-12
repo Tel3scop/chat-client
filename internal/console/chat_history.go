@@ -11,7 +11,7 @@ import (
 // DefaultHistoryMessages количество сообщений в истории по умолчанию
 const DefaultHistoryMessages = 20
 
-func (c *Console) runHistory(cmd *cobra.Command, args []string) {
+func (c *Console) runHistory(_ *cobra.Command, _ []string) {
 	fmt.Println(otherMessage("Команда истории чата.\n"))
 	if c.currentChat.ID == 0 {
 		fmt.Println(color.RedString("Вы должны подключиться к чату, чтобы использовать эту команду"))

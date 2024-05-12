@@ -10,7 +10,6 @@ import (
 
 var myMessage = color.New(color.Italic, color.FgGreen).SprintFunc()
 var otherMessage = color.New(color.Bold, color.FgBlue).SprintFunc()
-var menuTitle = color.New(color.Bold, color.FgGreen).SprintFunc()
 
 // Запрашивает ввод пользователя
 func (c *Console) promptInput(prompt string) (string, error) {

@@ -4,7 +4,7 @@ import (
 	"github.com/spf13/cobra"
 )
 
-func (c *Console) runShow(cmd *cobra.Command, args []string) {
+func (c *Console) runShow(_ *cobra.Command, _ []string) {
 	c.whereIAm()
 	c.showMyChats()
 }

@@ -1,15 +1,12 @@
 package console
 
 import (
-	"errors"
 	"fmt"
 	"strings"
 
 	"github.com/fatih/color"
 	"github.com/spf13/cobra"
 )
-
-var chatCmd *cobra.Command
 
 // Общий цикл для управления чатами
 func (c *Console) runChatMenu(_ *cobra.Command, _ []string) {
@@ -38,25 +35,6 @@ func (c *Console) runChatMenu(_ *cobra.Command, _ []string) {
 			}
 		}
 	}
-}
-
-// Обработка команд чата
-func (c *Console) executeChatCommand(input string) error {
-	switch input {
-	case Exit:
-		return errors.New("exit")
-	case Show:
-		c.showMyChats()
-	case Connect:
-		c.runConnectChat(c.cmd, nil)
-	case Create:
-		c.runCreateChat(c.cmd, nil)
-	case History:
-		c.runHistory(c.cmd, nil)
-	default:
-		return fmt.Errorf(color.RedString("Команда не найдена: %s", input))
-	}
-	return nil
 }
 
 // Отображение доступных чатов

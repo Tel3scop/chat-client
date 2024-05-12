@@ -23,7 +23,6 @@ var helpChatText = `
 
 var fullHelp = helpText + helpChatText
 
-func (c *Console) runHelp(cmd *cobra.Command, args []string) {
-	fmt.Printf(fullHelp)
-	return
+func (c *Console) runHelp(_ *cobra.Command, _ []string) {
+	fmt.Print(fullHelp)
 }

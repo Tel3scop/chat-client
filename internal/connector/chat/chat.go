@@ -3,7 +3,6 @@ package chat
 import (
 	"context"
 	"fmt"
-	"sync"
 
 	"github.com/Tel3scop/chat-client/internal/connector"
 	"github.com/Tel3scop/chat-client/internal/connector/auth"
@@ -22,11 +21,6 @@ type Client struct {
 }
 
 var _ connector.ChatClient = (*Client)(nil)
-
-type TokenStruct struct {
-	value string
-	mu    sync.Mutex
-}
 
 // New создает новый экземпляр клиента
 func New(host string, port int64) (*Client, error) {

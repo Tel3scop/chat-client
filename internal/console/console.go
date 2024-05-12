@@ -36,6 +36,7 @@ const Connect = "connect"
 // History показать историю чата
 const History = "history"
 
+// MaxLoginTries максимальное количество попыток авторизации
 const MaxLoginTries = 3
 
 // Console структура для работы с консольными командами
@@ -50,22 +51,15 @@ type Console struct {
 	reader      *bufio.Reader
 }
 
-// rootCmd represents the base command when called without any subcommands
-var rootCmd = &cobra.Command{
-	Use:   "chat-client",
-	Short: "Чат-клиент",
-	Long:  "Чат-клиент позволяет через консоль создавать чаты с друзьями",
-}
-
 // myChats список чатов пользователя
 var myChats = make(map[int64]model.Chat)
 
 func (c *Console) whereIAm() {
-	fmt.Printf(color.GreenString("\n\n Уважаемый %s! ", c.username))
+	fmt.Print(color.GreenString("\n\n Уважаемый %s! ", c.username))
 	if c.currentChat.ID != 0 {
-		fmt.Printf(color.GreenString("Вы находитесь в чате [%d] %s", c.currentChat.ID, c.currentChat.Name))
+		fmt.Print(color.GreenString("Вы находитесь в чате [%d] %s", c.currentChat.ID, c.currentChat.Name))
 	} else {
-		fmt.Printf(color.YellowString("Вы не покдлючены к чату"))
+		fmt.Print(color.YellowString("Вы не покдлючены к чату"))
 	}
 	fmt.Println()
 }
@@ -125,7 +119,7 @@ func (c *Console) setupCommands() {
 	)
 }
 
-func (c *Console) runRoot(cmd *cobra.Command, args []string) {
+func (c *Console) runRoot(_ *cobra.Command, _ []string) {
 	if err := c.checkAuth(); err != nil {
 		logger.Error("Authentication required", zap.Error(err))
 		return
@@ -141,11 +135,15 @@ func (c *Console) runRoot(cmd *cobra.Command, args []string) {
 			return
 		default:
 			c.cmd.SetArgs(strings.Split(input, " "))
-			c.cmd.Execute()
+			err := c.cmd.Execute()
+			if err != nil {
+				logger.Error("Command failed", zap.Error(err))
+			}
 		}
 	}
 }
 
+// Run запуск главного меню
 func (c *Console) Run() {
 	ctx := context.Background()
 
@@ -179,16 +177,9 @@ func (c *Console) executeCommandLoop() {
 		}
 
 		c.cmd.SetArgs(strings.Split(input, " "))
-		c.cmd.Execute()
+		err = c.cmd.Execute()
+		if err != nil {
+			logger.Error("error executing command", zap.Error(err))
+		}
 	}
-}
-
-func (c *Console) execute(args []string) error {
-	rootCmd.SetArgs(args)
-	err := rootCmd.Execute()
-	if err != nil {
-		return err
-	}
-
-	return nil
 }

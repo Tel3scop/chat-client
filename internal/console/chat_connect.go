@@ -2,7 +2,6 @@ package console
 
 import (
 	"context"
-	"errors"
 	"fmt"
 	"io"
 	"strconv"
@@ -53,7 +52,7 @@ func (c *Console) promptForChatID() (int64, error) {
 func (c *Console) connectToChat(chatID int64) error {
 	foundedChat, ok := myChats[chatID]
 	if !ok {
-		return errors.New(fmt.Sprintf("не удалось найти чат %d", chatID))
+		return fmt.Errorf(fmt.Sprintf("не удалось найти чат %d", chatID))
 	}
 
 	c.currentChat = foundedChat

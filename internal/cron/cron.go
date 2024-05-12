@@ -12,9 +12,11 @@ import (
 )
 
 var (
+	// Scheduler планировщик крона
 	Scheduler gocron.Scheduler
 )
 
+// Cron структура крона
 type Cron struct {
 	authClient *auth.Client
 	config     *config.Config
@@ -31,6 +33,7 @@ func NewCron(
 	}
 }
 
+// StartCron запустить крон и задания
 func (c *Cron) StartCron() {
 	var err error
 	Scheduler, err = gocron.NewScheduler()
@@ -48,6 +51,7 @@ func (c *Cron) StartCron() {
 	select {}
 }
 
+// StopCron остановить крон
 func StopCron() {
 	logger.Info("StartCron: shutdown scheduler")
 	err := Scheduler.Shutdown()
