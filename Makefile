@@ -12,3 +12,7 @@ install-golangci-lint: ## install linter
 .PHONY: lint
 lint: ## run linter
 	GOBIN=$(LOCAL_BIN) golangci-lint run ./... --config .golangci.pipeline.yaml
+
+
+build:
+	go build -o ./bin/chat-client ./cmd/main.go
