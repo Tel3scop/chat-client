@@ -73,15 +73,17 @@ func (a *App) initConfig(_ context.Context) error {
 }
 
 func (a *App) initLogger(_ context.Context) error {
-	logger.InitByParams(
-		a.serviceProvider.Config().Log.FileName,
-		a.serviceProvider.Config().Log.Level,
-		a.serviceProvider.Config().Log.MaxSize,
-		a.serviceProvider.Config().Log.MaxBackups,
-		a.serviceProvider.Config().Log.MaxAge,
-		a.serviceProvider.Config().Log.Compress,
-		false,
-	)
+	loggerConfig := logger.Config{
+		Filename:   a.serviceProvider.Config().Log.FileName,
+		Level:      a.serviceProvider.Config().Log.Level,
+		MaxSize:    a.serviceProvider.Config().Log.MaxSize,
+		MaxBackups: a.serviceProvider.Config().Log.MaxBackups,
+		MaxAge:     a.serviceProvider.Config().Log.MaxAge,
+		Compress:   a.serviceProvider.Config().Log.Compress,
+		StdOut:     false,
+	}
+	logger.InitByParams(loggerConfig)
+
 	return nil
 }
 

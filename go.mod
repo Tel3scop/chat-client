@@ -6,7 +6,7 @@ toolchain go1.22.1
 
 require (
 	github.com/Tel3scop/auth v0.0.0-20240505111330-e8393071409c
-	github.com/Tel3scop/helpers v1.0.3
+	github.com/Tel3scop/helpers v1.0.4-0.20240522174542-52b03c13ba29
 	github.com/caarlos0/env/v10 v10.0.0
 	github.com/envoyproxy/protoc-gen-validate v1.0.4
 	github.com/fatih/color v1.16.0

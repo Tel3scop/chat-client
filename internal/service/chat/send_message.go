@@ -14,11 +14,11 @@ func (s *serv) SendMessage(ctx context.Context, ID int64, from string, text stri
 		From:   from,
 		Text:   text,
 	}
+	request.Timestamp = timestamppb.Now()
 	if timestamp != nil {
 		request.Timestamp = timestamppb.New(*timestamp)
-	} else {
-		request.Timestamp = timestamppb.Now()
 	}
+
 	err := s.chatClient.SendMessage(ctx, request)
 	if err != nil {
 		return err

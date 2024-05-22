@@ -4,6 +4,8 @@ github.com/Tel3scop/auth v0.0.0-20240505111330-e8393071409c h1:s5CEDoHnWb36NfMmh
 github.com/Tel3scop/auth v0.0.0-20240505111330-e8393071409c/go.mod h1:b/A0hlHqx43kbwTmNfkHL6v+EUsT8zi4LC4GIxI4oKo=
 github.com/Tel3scop/helpers v1.0.3 h1:4B7eDjuFEW2gJLQt4nzh8Lw3ICEizA1aYNgB1bvKf5Q=
 github.com/Tel3scop/helpers v1.0.3/go.mod h1:aIGBYQ+0jfngxbKiuHU61pJrxHyxjbgXe4s5lqGKItE=
+github.com/Tel3scop/helpers v1.0.4-0.20240522174542-52b03c13ba29 h1:jbl9yEGSBf3bH3/qVWoxBwYoBkcA+H9zy1M89QlCcR4=
+github.com/Tel3scop/helpers v1.0.4-0.20240522174542-52b03c13ba29/go.mod h1:aIGBYQ+0jfngxbKiuHU61pJrxHyxjbgXe4s5lqGKItE=
 github.com/caarlos0/env/v10 v10.0.0 h1:yIHUBZGsyqCnpTkbjk8asUlx6RFhhEs+h7TOBdgdzXA=
 github.com/caarlos0/env/v10 v10.0.0/go.mod h1:ZfulV76NvVPw3tm591U4SwL3Xx9ldzBP9aGxzeN7G18=
 github.com/cpuguy83/go-md2man/v2 v2.0.3/go.mod h1:tgQtvFlXSQOSOSIRvRPT7W67SCa46tRHOmNcaadrF8o=

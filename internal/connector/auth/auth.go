@@ -2,7 +2,6 @@ package auth
 
 import (
 	"context"
-	"fmt"
 	"sync"
 	"time"
 
@@ -12,7 +11,6 @@ import (
 	"go.uber.org/zap"
 
 	"google.golang.org/grpc"
-	"google.golang.org/grpc/credentials/insecure"
 )
 
 // Client экземпляр
@@ -32,17 +30,9 @@ var refreshToken TokenStruct
 var accessToken TokenStruct
 
 // New создает новый экземпляр клиента
-func New(host string, port int64) (*Client, error) {
+func New(conn *grpc.ClientConn) (*Client, error) {
 	refreshToken = TokenStruct{}
 	accessToken = TokenStruct{}
-
-	conn, err := grpc.Dial(
-		fmt.Sprintf("%s:%d", host, port),
-		grpc.WithTransportCredentials(insecure.NewCredentials()),
-	)
-	if err != nil {
-		return nil, fmt.Errorf("failed to dial GRPC client: %v", err)
-	}
 
 	return &Client{
 		client: auth_v1.NewAuthV1Client(conn),
@@ -58,6 +48,7 @@ func (c *Client) Login(ctx context.Context, username, password string) error {
 	if err != nil {
 		return err
 	}
+
 	refreshToken.mu.Lock()
 	defer refreshToken.mu.Unlock()
 
@@ -70,8 +61,10 @@ func (c *Client) Login(ctx context.Context, username, password string) error {
 		if err != nil {
 			logger.Error("failed to set access token", zap.Error(err))
 		}
+
 		logger.Info("access token set successfully")
 	}()
+
 	return nil
 }
 
@@ -82,11 +75,13 @@ func (c *Client) SetRefreshToken(ctx context.Context) error {
 	if err != nil {
 		return err
 	}
+
 	logger.Info("updated refresh token")
 	refreshToken.mu.Lock()
 	defer refreshToken.mu.Unlock()
 
 	refreshToken.value = response.RefreshToken
+
 	return nil
 }
 
@@ -97,11 +92,13 @@ func (c *Client) SetAccessToken(ctx context.Context) error {
 	if err != nil {
 		return err
 	}
+
 	logger.Info("updated access token")
 	accessToken.mu.Lock()
 	defer accessToken.mu.Unlock()
 
 	accessToken.value = response.AccessToken
+
 	return nil
 }
 
@@ -109,6 +106,7 @@ func (c *Client) SetAccessToken(ctx context.Context) error {
 func GetRefreshToken() string {
 	refreshToken.mu.Lock()
 	defer refreshToken.mu.Unlock()
+
 	return refreshToken.value
 }
 
@@ -116,5 +114,6 @@ func GetRefreshToken() string {
 func GetAccessToken() string {
 	accessToken.mu.Lock()
 	defer accessToken.mu.Unlock()
+
 	return accessToken.value
 }

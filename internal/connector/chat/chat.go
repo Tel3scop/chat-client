@@ -2,16 +2,14 @@ package chat
 
 import (
 	"context"
-	"fmt"
 
 	"github.com/Tel3scop/chat-client/internal/connector"
 	"github.com/Tel3scop/chat-client/internal/connector/auth"
 	"github.com/Tel3scop/chat-client/internal/model"
 	"github.com/Tel3scop/chat-client/internal/pkg/chat_v1"
 
-	//"github.com/Tel3scop/chat-server/pkg/chat_v1"
+	//todo: поменять на "github.com/Tel3scop/chat-server/pkg/chat_v1" когда смердим ветку week8
 	"google.golang.org/grpc"
-	"google.golang.org/grpc/credentials/insecure"
 	"google.golang.org/grpc/metadata"
 )
 
@@ -23,15 +21,7 @@ type Client struct {
 var _ connector.ChatClient = (*Client)(nil)
 
 // New создает новый экземпляр клиента
-func New(host string, port int64) (*Client, error) {
-	conn, err := grpc.Dial(
-		fmt.Sprintf("%s:%d", host, port),
-		grpc.WithTransportCredentials(insecure.NewCredentials()),
-	)
-	if err != nil {
-		return nil, fmt.Errorf("failed to dial GRPC client: %v", err)
-	}
-
+func New(conn *grpc.ClientConn) (*Client, error) {
 	return &Client{
 		client: chat_v1.NewChatV1Client(conn),
 	}, nil
